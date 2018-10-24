@@ -55,6 +55,6 @@ public:
 	void render() const;
 	void handleEvents();
 	void update();
-	Vector2D collision(Vector2D pos, uint width, uint height);
+	bool collides(const SDL_Rect& rect, const Vector2D& dir, Vector2D& collVector);
 };
 

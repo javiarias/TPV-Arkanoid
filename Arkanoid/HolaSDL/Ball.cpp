@@ -6,7 +6,6 @@ Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _
 {
 	pos = Vector2D(x, y);
 	dir = Vector2D(-5, -1);
-	dir.normalize();
 	height = _height;
 	width = _width;
 	texture = _texture;
@@ -34,11 +33,17 @@ void Ball::changeDir(Vector2D collisionVector) {
 }
 
 void Ball::update() {
-	Vector2D collisionVector = game->collision(pos, width, height);
-	
-
-	dir = collisionVector;
-	dir.normalize();
+	Vector2D prevPos = pos;
 
 	pos = pos + dir;
+
+	Vector2D collVector;
+	SDL_Rect ballRect = getDestRect();
+
+	if (game->collides(ballRect, vel, collVector)) {
+		dir = dir - collVector * (2 * dir*collVector);
+		pos = prevPos + dir;
+	}
 }
+
+

@@ -64,24 +64,31 @@ void Game::handleEvents() {
 }
 
 
-Vector2D Game::collision(Vector2D pos, uint width, uint height)
+bool Game::collides(const SDL_Rect& rect, const Vector2D& dir, Vector2D& collVector)
 {
-	//check walls
+	/*if (la bola dentro del mapa) {
+		Block* block = blocksMap->checkCollision();
+		if (block != nullptr) {
+			blocksMap->destroy(block);
+			//determinar el collvector
+			if (blocksMap->getBlockAmount() == 0)
+				win = true;
+			return true;
+		}
+	}
 
-	//left
-	if (pos.getX() <= WALL_WIDTH)
-		return Vector2D(1, 0);
-	//right
+	else*/ if (leftWall->collides(rect, collVector))
+		return true;
 
-	//top
+	else if (rightWall->collides(rect, collVector))
+		return true;
 
+	else if (topWall->collides(rect, collVector))
+		return true;
 
+	else if () { //paddle
 
+	}
 
-
-
-	//bottom (WIP)
-
-	else
-		return pos;
+	return false;
 }
