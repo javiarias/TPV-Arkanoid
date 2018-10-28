@@ -64,7 +64,7 @@ void Game::handleEvents() {
 }
 
 
-bool Game::collides(const SDL_Rect& rect, const Vector2D& dir, Vector2D& collVector)
+bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVector)
 {
 	/*if (la bola dentro del mapa) {
 		Block* block = blocksMap->checkCollision();
@@ -86,9 +86,14 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& dir, Vector2D& collVec
 	else if (topWall->collides(rect, collVector))
 		return true;
 
-	else if () { //paddle
-
+	else if (rect.h + rect.y > WIN_HEIGHT - WALL_WIDTH) {
+		collVector = Vector2D(0, -1);
+		return true;
 	}
+
+	/*else if () { //paddle
+
+	}*/
 
 	return false;
 }

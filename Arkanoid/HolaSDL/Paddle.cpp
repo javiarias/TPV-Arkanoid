@@ -22,10 +22,10 @@ void Paddle::handleEvents(SDL_Event event)
 	if (event.type == SDL_KEYDOWN) {
 
 		if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
-			dir.setX(-1);
+			dir.setX(-0.1);
 
 		else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
-			dir.setX(1);
+			dir.setX(0.1);
 
 		else
 			dir.setX(0);
