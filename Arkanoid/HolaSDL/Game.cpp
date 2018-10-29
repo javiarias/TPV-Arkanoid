@@ -46,7 +46,7 @@ void Game::render() const {
 	SDL_RenderClear(renderer);
 
 	ball->render();
-	//blocksMap->render();
+	blocksMap->render();
 	paddle->render();
 	leftWall->render();
 	rightWall->render();
@@ -66,18 +66,7 @@ void Game::handleEvents() {
 
 bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVector)
 {
-	/*if (la bola dentro del mapa) {
-		Block* block = blocksMap->checkCollision();
-		if (block != nullptr) {
-			blocksMap->destroy(block);
-			//determinar el collvector
-			if (blocksMap->getBlockAmount() == 0)
-				win = true;
-			return true;
-		}
-	}
-
-	else*/ if (leftWall->collides(rect, collVector))
+	if (leftWall->collides(rect, collVector))
 		return true;
 
 	else if (rightWall->collides(rect, collVector))
@@ -95,5 +84,16 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 
 	}*/
 
-	return false;
+
+	else {
+		Block* block = blocksMap->collides(rect, vel, collVector);
+		if (block != nullptr) {
+			blocksMap->destroy(block);
+			/*if (blocksMap->getBlockAmount() == 0)
+				win = true;*/
+			return true;
+		}
+	}
+
+	
 }

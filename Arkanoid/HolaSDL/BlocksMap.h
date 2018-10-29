@@ -20,6 +20,8 @@ public:
 	void load(string file);
 	void render();
 	int getBlockAmount();
-	//Vector2D checkCollision(Ball ball);
+	Block* collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector);
+	Block* blockAt(const Vector2D& p);
+	void destroy(Block* block);
 };
 

@@ -1,11 +1,5 @@
 #include "Block.h"
 
-Block::~Block()
-{
-	delete texture;
-	delete referencePoint;
-}
-
 void Block::render() 
 {
 	SDL_Rect destRect;

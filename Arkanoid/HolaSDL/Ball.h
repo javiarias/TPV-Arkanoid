@@ -12,7 +12,6 @@ private:
 	Texture* texture = nullptr;
 	Game* game = nullptr;
 
-	void changeDir(Vector2D collisionVector);
 	SDL_Rect getDestRect();
 
 public:
