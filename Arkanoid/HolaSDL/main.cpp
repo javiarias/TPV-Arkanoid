@@ -11,9 +11,6 @@ void GameLoop() {
 	Game game = Game();
 
 	game.run();
-	
-	string aux;
-	cin >> aux;
 }
 
 int main(int argc, char* argv[]){

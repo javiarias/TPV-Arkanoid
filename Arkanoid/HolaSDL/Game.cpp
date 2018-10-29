@@ -58,7 +58,8 @@ void Game::render() const {
 void Game::handleEvents() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event) && !exit) {
-		if (event.type == SDL_QUIT) exit = true;
+		if (event.type == SDL_QUIT)
+			exit = true;
 		paddle->handleEvents(event);
 	}
 }
