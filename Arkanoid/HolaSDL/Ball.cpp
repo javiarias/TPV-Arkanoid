@@ -5,7 +5,7 @@
 Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game)
 {
 	pos = Vector2D(x, y);
-	vel = Vector2D(0.7, -0.7);
+	vel = Vector2D(0.7 * 1, -0.4 * 1);
 	height = _height;
 	width = _width;
 	texture = _texture;

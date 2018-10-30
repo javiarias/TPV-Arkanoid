@@ -81,9 +81,9 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 		return true;
 	}
 
-	/*else if () { //paddle
+	else if (paddle->ballColission) { //paddle
 
-	}*/
+	}
 
 
 	else {

@@ -1,4 +1,5 @@
 #include "BlocksMap.h"
+#include <cmath>
 
 BlocksMap::BlocksMap(string file, uint refX, uint refY, uint WindowXSize, uint WindowYSize, Texture* texture)
 {
@@ -66,15 +67,19 @@ int BlocksMap::getBlockAmount() {
 }
 
 Block* BlocksMap::blockAt(const Vector2D& p) {
-	uint x = (p.getX() - refPos->getX()) / xPixCell;
-	uint y = (p.getY() - refPos->getY()) / yPixCell;
-	return blocks[x][y];
+	uint x = trunc((double)((p.getX() - refPos->getX()) / xPixCell)); // el programa nos daba errores a la hora de calcular la columna y la fila, 
+																	  // y nos comentaron que dejáramos esto por si acaso
+	uint y = trunc((double)((p.getY() - refPos->getY()) / yPixCell));
+	if (x >= 0 && x < xSize && y >= 0 && y < ySize)
+		return blocks[x][y];
+	else
+		return nullptr;
 }
 
 Block* BlocksMap::collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) {
 
 	Block* b = nullptr;
-	if (!(ballRect.y >= yPixTotal || ballRect.x >= xPixTotal || ballRect.y < 0 || ballRect.x < 0)) {
+	if (ballRect.y - ballRect.h < yPixTotal && ballRect.x < xPixTotal && ballRect.y >= 0 && ballRect.x >= 0) {
 		Vector2D p0 = { (double)ballRect.x, (double)ballRect.y }; // top-left
 		Vector2D p1 = { (double)(ballRect.x + ballRect.w), (double)ballRect.y }; // top-right
 		Vector2D p2 = { (double)ballRect.x, (double)(ballRect.y + ballRect.h) }; // bottom-left
