@@ -33,6 +33,8 @@ const File FILES[NUM_TEXTURES] =
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
 const uint WALL_WIDTH = 10;
+const uint FRAMERATE = 60;
+const uint FRAME_CONTROL = (1000 / FRAMERATE);
 
 class Game
 {
@@ -40,6 +42,7 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	bool exit = false;
+	bool dead = false;
 	Texture* textures[NUM_TEXTURES];
 	Ball* ball = nullptr;
 	Paddle* paddle = nullptr;

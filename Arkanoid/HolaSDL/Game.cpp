@@ -17,23 +17,44 @@ Game::Game() {
 	leftWall = new Wall(0, 0, WALL_WIDTH, WIN_HEIGHT, textures[SideTex]);
 	rightWall = new Wall(WIN_WIDTH - WALL_WIDTH, 0, WALL_WIDTH, 600, textures[SideTex]);
 	topWall = new Wall(0, 0, WIN_WIDTH, WALL_WIDTH, textures[TopTex]);
-	ball = new Ball(395, 480, 10, 10, textures[BallTex], this);
-	paddle = new Paddle(350, 500, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
+	ball = new Ball(WIN_WIDTH/2 - 10, WIN_HEIGHT - 100 - 15, 10, 10, textures[BallTex], this);
+	paddle = new Paddle(WIN_WIDTH/2 - 50, WIN_HEIGHT - 100, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 	blocksMap = new BlocksMap(MAP_PATH + "level01.ark", WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 }
 
 Game::~Game() {
 	for (uint i = 0; i < NUM_TEXTURES; i++) delete textures[i];
+	delete leftWall;
+	delete rightWall;
+	delete topWall;
+	delete ball;
+	delete paddle;
+	delete blocksMap;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
 void Game::run() {
-	while (!exit) { // Falta el control de tiempo
+	while (!exit) {
+		uint frameStart = SDL_GetTicks();
+
 		handleEvents();
 		update();
 		render();
+		if (dead) {
+			delete ball;
+			ball = new Ball(395, 480, 10, 10, textures[BallTex], this);
+			delete paddle;
+			paddle = new Paddle(350, 500, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
+			render();
+			while (dead)
+				handleEvents();
+		}
+
+		uint frameDuration = SDL_GetTicks() - frameStart;
+		if (frameDuration < FRAME_CONTROL)
+			SDL_Delay(FRAME_CONTROL - frameDuration);
 	}
 }
 
@@ -58,9 +79,15 @@ void Game::render() const {
 void Game::handleEvents() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event) && !exit) {
-		if (event.type == SDL_QUIT)
-			exit = true;
-		paddle->handleEvents(event);
+		if (dead) {
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+				dead = false;
+		}
+		else {
+			if (event.type == SDL_QUIT)
+				exit = true;
+			paddle->handleEvents(event);
+		}
 	}
 }
 
@@ -78,8 +105,8 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 		return true;
 	//Collides con el suelo (temporal)
 	else if (rect.h + rect.y > WIN_HEIGHT - WALL_WIDTH) {
-		collVector = Vector2D(0, -1);
-		return true;
+		dead = true;
+		return false;
 	}
 	//Collides con el paddle
 	else if (paddle->getCollisionVector(rect, collVector)) { 
@@ -94,7 +121,7 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 				win = true;*/
 			return true;
 		}
-	}
 
-	
+		return false;
+	}
 }

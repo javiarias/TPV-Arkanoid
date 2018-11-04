@@ -22,10 +22,10 @@ void Paddle::handleEvents(SDL_Event event)
 	if (event.type == SDL_KEYDOWN) {
 
 		if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
-			dir.setX(-0.1);
+			dir.setX(-7);
 
 		else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
-			dir.setX(0.1);
+			dir.setX(7);
 
 		else
 			dir.setX(0);
@@ -47,20 +47,21 @@ bool Paddle::getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector)
 	paddle.h = height;
 	paddle.w = width;
 
-	if (SDL_IntersectRect(&paddle, &ballRect, &result)) {
-		//Choca con la parte superior del paddle
-		if (result.w > result.h)
-			collVector = Vector2D(0, -1);
-		//Choca con los laterales
-		else {
-			//Izquierda
-			if(paddle.x < ballRect.x)
-				collVector = Vector2D(1, 0);
-			//Derecha
-			else
-				collVector = Vector2D(-1, 0);
-		}			
-		return true;
-	}
+	if(!(ballRect.x >= paddle.x && ballRect.y >= paddle.y))
+		if (SDL_IntersectRect(&paddle, &ballRect, &result)) {
+			//Choca con la parte superior del paddle
+			if (result.w > result.h)
+				collVector = Vector2D(0, -1);
+			//Choca con los laterales
+			else {
+				//Izquierda
+				if(paddle.x < ballRect.x)
+					collVector = Vector2D(1, 0);
+				//Derecha
+				else
+					collVector = Vector2D(-1, 0);
+			}			
+			return true;
+		}
 	return false;
 }
