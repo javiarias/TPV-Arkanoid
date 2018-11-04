@@ -11,10 +11,10 @@ private:
 
 public:
 	Block(uint w, uint h, Vector2D* refPos, uint _row, uint _column, uint _color, Texture* _texture) : width(w), height(h), column(_column), row(_row), color(_color), texture(_texture) { referencePoint = refPos; };
-	void render();
-	uint getY() { return ((row * height) + referencePoint->getY()); };
-	uint getX() { return ((column * width) + referencePoint->getX()); };
-	uint getW() { return width; };
-	uint getH() { return height; };
+	void render() const;
+	uint getY() const { return ((row * height) + referencePoint->getY()); };
+	uint getX() const { return ((column * width) + referencePoint->getX()); };
+	uint getW() const { return width; };
+	uint getH() const { return height; };
 };
 

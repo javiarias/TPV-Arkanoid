@@ -15,9 +15,9 @@ private:
 
 public:
 	Paddle(uint x, uint y, uint w, uint h, uint _windowWidth, uint _wallWidth, Texture* _texture) : width(w), height(h), texture(_texture), windowWidth(_windowWidth), wallWidth(_wallWidth) { pos = Vector2D(x, y); dir = Vector2D(0, 0); };
-	void render();
+	void render() const;
 	void update();
 	void handleEvents(SDL_Event event);
-	bool getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector);
+	bool getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector) const;
 };
 

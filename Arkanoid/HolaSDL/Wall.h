@@ -11,7 +11,7 @@ private:
 
 public:
 	Wall(double x, double y, uint w, uint h, Texture* _texture) : texture(_texture), width(w), height(h) { pos = Vector2D(x, y); };
-	void render();
-	bool collides(const SDL_Rect& rect, Vector2D& collVector);
+	void render() const;
+	bool collides(const SDL_Rect& rect, Vector2D& collVector) const;
 };
 

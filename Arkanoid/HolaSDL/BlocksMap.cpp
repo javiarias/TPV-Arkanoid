@@ -10,17 +10,19 @@ BlocksMap::BlocksMap(string file, uint refX, uint refY, uint WindowXSize, uint W
 	load(file);
 }
 
-BlocksMap::~BlocksMap()
-{
-	for (int i = 0; i < xSize; i++)
-	{
-		for (int j = 0; j < ySize; j++)
+BlocksMap::~BlocksMap() {
+	for (int i = 0; i < xSize; i++)	{
+		for (int j = 0; j < ySize; j++) {
 			delete blocks[i][j];
+			blocks[i][j] = nullptr;
+		}
 		delete[] blocks[i];
+		blocks[i] = nullptr;
 	}
 	delete[] blocks;
-	delete blockText;
+	blocks = nullptr;
 	delete refPos;
+	refPos = nullptr;
 }
 
 void BlocksMap::load(string file) {
@@ -29,7 +31,7 @@ void BlocksMap::load(string file) {
 
 	if (input.is_open()) {
 		int x, y;
-		input >> x >> y;
+		input >> y >> x;
 
 		xSize = x;
 		ySize = y;
@@ -40,21 +42,21 @@ void BlocksMap::load(string file) {
 		xPixCell = xPixTotal / xSize;
 		yPixCell = yPixTotal / ySize;
 
-		for (int i = 0; i < x; i++)
-			for (int j = 0; j < y; j++)	{
+		for (int j = 0; j < y; j++)
+			for (int i = 0; i < x; i++)	{
 				int col;
 				input >> col;
 				if (col != 0)
-					blocks[j][i] = new Block(xPixCell, yPixCell, refPos, i, j, col, blockText);
+					blocks[i][j] = new Block(xPixCell, yPixCell, refPos, j, i, col, blockText);
 				else
-					blocks[j][i] = nullptr;
+					blocks[i][j] = nullptr;
 			}
 		input.close();
 	}
 	else throw "Level file not found. File path should be: " + file;
 }
 
-int BlocksMap::getBlockAmount() {
+int BlocksMap::getBlockAmount() const {
 	int ret = 0;
 
 	for (int i = 0; i < xSize; i++)
@@ -65,7 +67,7 @@ int BlocksMap::getBlockAmount() {
 	return ret;
 }
 
-Block* BlocksMap::blockAt(const Vector2D& p) {
+Block* BlocksMap::blockAt(const Vector2D& p) const {
 	uint x = trunc((double)((p.getX() - refPos->getX()) / xPixCell)); // el programa nos daba errores a la hora de calcular la columna y la fila, 
 																	  // y nos comentaron que dejáramos esto por si acaso
 	uint y = trunc((double)((p.getY() - refPos->getY()) / yPixCell));
@@ -75,7 +77,7 @@ Block* BlocksMap::blockAt(const Vector2D& p) {
 		return nullptr;
 }
 
-Block* BlocksMap::collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) {
+Block* BlocksMap::collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) const {
 
 	Block* b = nullptr;
 	if (ballRect.y - ballRect.h < yPixTotal && ballRect.x < xPixTotal && ballRect.y >= 0 && ballRect.x >= 0) {
@@ -158,7 +160,7 @@ void BlocksMap::destroy(Block* block) {
 	blocks[x][y] = nullptr;
 }
 
-void BlocksMap::render() {
+void BlocksMap::render() const {
 	for (int i = 0; i < xSize; i++)
 		for (int j = 0; j < ySize; j++) {
 			if (blocks[i][j] != nullptr)

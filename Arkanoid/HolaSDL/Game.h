@@ -11,6 +11,7 @@
 const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
 const uint NUM_TEXTURES = 5;
+const uint NUM_LEVELS = 3;
 const enum TextureName {
 	BallTex,
 	BlockTex,
@@ -30,6 +31,8 @@ const File FILES[NUM_TEXTURES] =
 	{"side.png", 1, 1},
 	{"topside.png", 1, 1}
 };
+const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark" };
+
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
 const uint WALL_WIDTH = 10;
@@ -43,6 +46,7 @@ private:
 	SDL_Renderer* renderer = nullptr;
 	bool exit = false;
 	bool dead = false;
+	bool endGame = false;
 	Texture* textures[NUM_TEXTURES];
 	Ball* ball = nullptr;
 	Paddle* paddle = nullptr;
@@ -50,6 +54,9 @@ private:
 	Wall* leftWall = nullptr;
 	Wall* rightWall = nullptr;
 	Wall* topWall = nullptr;
+	void cleanGame();
+
+	uint currentLevel = 0;
 
 public:
 	Game();
@@ -59,5 +66,7 @@ public:
 	void handleEvents();
 	void update();
 	bool collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVector);
+	//Opcional
+	void loadNextLevel();
 };
 

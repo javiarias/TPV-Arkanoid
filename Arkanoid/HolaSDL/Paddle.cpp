@@ -1,8 +1,7 @@
 #include "Paddle.h"
 
 
-void Paddle::render()
-{
+void Paddle::render() const {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
 	destRect.y = pos.getY();
@@ -11,22 +10,17 @@ void Paddle::render()
 	texture->render(destRect);
 }
 
-void Paddle::update()
-{
+void Paddle::update() {
 	if (checkLimits())
 		pos = pos + dir;
 }
 
-void Paddle::handleEvents(SDL_Event event)
-{
+void Paddle::handleEvents(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
-
 		if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
 			dir.setX(-7);
-
 		else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
 			dir.setX(7);
-
 		else
 			dir.setX(0);
 	}
@@ -34,20 +28,18 @@ void Paddle::handleEvents(SDL_Event event)
 		dir.setX(0);
 }
 
-bool Paddle::checkLimits()
-{
+bool Paddle::checkLimits() {
 	return (dir.getX() < 0 && pos.getX() > wallWidth) || (dir.getX() > 0 && pos.getX() < (windowWidth - wallWidth - width)) || (dir.getX() == 0);
 }
 
-bool Paddle::getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector)
-{
+bool Paddle::getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector) const {
 	SDL_Rect paddle, result;
 	paddle.x = pos.getX();
 	paddle.y = pos.getY();
 	paddle.h = height;
 	paddle.w = width;
 
-	if(!(ballRect.x >= paddle.x && ballRect.y >= paddle.y))
+	if (!(ballRect.x + ballRect.w > paddle.x && ballRect.y >= paddle.y && ballRect.x < paddle.x + paddle.w))
 		if (SDL_IntersectRect(&paddle, &ballRect, &result)) {
 			//Choca con la parte superior del paddle
 			if (result.w > result.h)

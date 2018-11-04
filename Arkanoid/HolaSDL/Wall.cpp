@@ -2,7 +2,7 @@
 
 
 
-void Wall::render()
+void Wall::render() const
 {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
@@ -12,7 +12,7 @@ void Wall::render()
 	texture->render(destRect);
 }
 
-bool Wall::collides(const SDL_Rect& rect, Vector2D& collVector) {
+bool Wall::collides(const SDL_Rect& rect, Vector2D& collVector) const {
 	SDL_Rect wall;
 	wall.x = pos.getX();
 	wall.y = pos.getY();
@@ -26,9 +26,7 @@ bool Wall::collides(const SDL_Rect& rect, Vector2D& collVector) {
 			collVector = Vector2D(1, 0);
 		else
 			collVector = Vector2D(-1, 0);
-
 		return true;
 	}
-
 	return false;
 }

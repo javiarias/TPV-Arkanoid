@@ -5,9 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-class BlocksMap
-{
-
+class BlocksMap {
 private:
 	Block*** blocks = nullptr;
 	uint xSize = 0, ySize = 0, xPixTotal = 0, yPixTotal = 0, xPixCell = 0, yPixCell = 0;
@@ -18,10 +16,10 @@ public:
 	BlocksMap(string file, uint refX, uint refY, uint WindowXSize, uint WindowYSize, Texture* texture);
 	~BlocksMap();
 	void load(string file);
-	void render();
-	int getBlockAmount();
-	Block* collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector);
-	Block* blockAt(const Vector2D& p);
+	void render() const;
+	int getBlockAmount() const;
+	Block* collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) const;
+	Block* blockAt(const Vector2D& p) const;
 	void destroy(Block* block);
 };
 

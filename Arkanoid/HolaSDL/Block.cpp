@@ -1,7 +1,7 @@
 #include "Block.h"
 
-void Block::render() 
-{
+
+void Block::render() const {
 	SDL_Rect destRect;
 	destRect.x = width * column + referencePoint->getX();
 	destRect.y = height * row + referencePoint->getY();

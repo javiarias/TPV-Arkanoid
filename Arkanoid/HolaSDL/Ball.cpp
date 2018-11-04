@@ -2,8 +2,7 @@
 #include "Game.h"
 
 
-Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game)
-{
+Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game) {
 	pos = Vector2D(x, y);
 	vel = Vector2D(7, -4);
 	height = _height;
@@ -12,8 +11,7 @@ Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _
 	game = _game;
 }
 
-
-void Ball::render() {
+void Ball::render() const {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
 	destRect.y = pos.getY();
@@ -22,7 +20,7 @@ void Ball::render() {
 	texture->render(destRect);
 }
 
-SDL_Rect Ball::getDestRect() {
+SDL_Rect Ball::getDestRect() const {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
 	destRect.y = pos.getY();
