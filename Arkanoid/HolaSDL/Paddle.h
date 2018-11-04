@@ -18,6 +18,6 @@ public:
 	void render();
 	void update();
 	void handleEvents(SDL_Event event);
-	Vector2D ballColission();
+	bool getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector);
 };
 

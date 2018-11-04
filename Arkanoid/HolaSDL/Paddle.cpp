@@ -39,11 +39,28 @@ bool Paddle::checkLimits()
 	return (dir.getX() < 0 && pos.getX() > wallWidth) || (dir.getX() > 0 && pos.getX() < (windowWidth - wallWidth - width)) || (dir.getX() == 0);
 }
 
-Vector2D Paddle::ballColission()
+bool Paddle::getCollisionVector(const SDL_Rect& ballRect, Vector2D& collVector)
 {
-	Vector2D ret;
+	SDL_Rect paddle, result;
+	paddle.x = pos.getX();
+	paddle.y = pos.getY();
+	paddle.h = height;
+	paddle.w = width;
 
-	
-
-	return ret;
+	if (SDL_IntersectRect(&paddle, &ballRect, &result)) {
+		//Choca con la parte superior del paddle
+		if (result.w > result.h)
+			collVector = Vector2D(0, -1);
+		//Choca con los laterales
+		else {
+			//Izquierda
+			if(paddle.x < ballRect.x)
+				collVector = Vector2D(1, 0);
+			//Derecha
+			else
+				collVector = Vector2D(-1, 0);
+		}			
+		return true;
+	}
+	return false;
 }

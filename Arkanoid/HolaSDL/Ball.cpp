@@ -40,7 +40,7 @@ void Ball::update() {
 	SDL_Rect ballRect = getDestRect();
 
 	if (game->collides(ballRect, vel, collVector)) {
-		vel = vel - (collVector * (vel*collVector*2));
+		vel = vel - (collVector * (vel * collVector  *2));
 		pos = prevPos + vel;
 	}
 }
