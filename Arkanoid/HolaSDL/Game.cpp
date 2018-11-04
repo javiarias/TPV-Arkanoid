@@ -10,16 +10,15 @@ Game::Game() {
 	if (window == nullptr || renderer == nullptr) throw "Error loading the SDL window or renderer";
 	// create the textures
 	for (uint i = 0; i < NUM_TEXTURES; i++)
-	{
 		textures[i] = new Texture(renderer, IMG_PATH + FILES[i].filename, FILES[i].rows, FILES[i].columns);
-	}
+
 	// create the game objects
 	leftWall = new Wall(0, 0, WALL_WIDTH, WIN_HEIGHT, textures[SideTex]);
 	rightWall = new Wall(WIN_WIDTH - WALL_WIDTH, 0, WALL_WIDTH, 600, textures[SideTex]);
 	topWall = new Wall(0, 0, WIN_WIDTH, WALL_WIDTH, textures[TopTex]);
 	ball = new Ball(WIN_WIDTH/2 - 10, WIN_HEIGHT - 100 - 15, 10, 10, textures[BallTex], this);
 	paddle = new Paddle(WIN_WIDTH/2 - 50, WIN_HEIGHT - 100, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
-	blocksMap = new BlocksMap(MAP_PATH + "level01.ark", WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
+	blocksMap = new BlocksMap(MAP_PATH + "levsel01.ark", WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 }
 
 Game::~Game() {

@@ -40,10 +40,8 @@ void BlocksMap::load(string file) {
 		xPixCell = xPixTotal / xSize;
 		yPixCell = yPixTotal / ySize;
 
-
 		for (int i = 0; i < x; i++)
-			for (int j = 0; j < y; j++)
-			{
+			for (int j = 0; j < y; j++)	{
 				int col;
 				input >> col;
 				if (col != 0)
@@ -53,6 +51,7 @@ void BlocksMap::load(string file) {
 			}
 		input.close();
 	}
+	else throw "Level file not found. File path should be: " + file;
 }
 
 int BlocksMap::getBlockAmount() {

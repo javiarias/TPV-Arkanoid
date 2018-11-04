@@ -14,6 +14,13 @@ void GameLoop() {
 }
 
 int main(int argc, char* argv[]){
-	GameLoop();
+	try {
+		GameLoop();
+	}
+	catch (string ex) {
+		cout << ex << endl;
+		//Linea que pausa el programa para ver si escribe la excepcion en consola
+		system("pause");
+	}
 	return 0;
 }
