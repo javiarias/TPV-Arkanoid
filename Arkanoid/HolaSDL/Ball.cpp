@@ -2,9 +2,12 @@
 #include "Game.h"
 
 
-Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game) {
+Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game, bool fake) {
 	pos = Vector2D(x, y);
-	vel = Vector2D(7, -4);
+	if (!fake)
+		vel = Vector2D(7, -4);
+	else
+		vel = Vector2D(0, 0);
 	height = _height;
 	width = _width;
 	texture = _texture;
@@ -38,7 +41,7 @@ void Ball::update() {
 	SDL_Rect ballRect = getDestRect();
 
 	if (game->collides(ballRect, vel, collVector)) {
-		vel = vel - (collVector * (vel * collVector  *2));
+		vel = vel - (collVector * (vel * collVector  * 2));
 		pos = prevPos + vel;
 	}
 }

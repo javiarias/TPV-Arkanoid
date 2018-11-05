@@ -1,22 +1,30 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: El directorio intermedio (Debug\) contiene archivos compartidos de otro proyecto (HolaSDL.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: El directorio intermedio (Debug\) contiene archivos compartidos de otro proyecto (HolaSDL.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
+  Ball.cpp
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\ball.cpp(19): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\ball.cpp(20): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\ball.cpp(28): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\ball.cpp(29): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
   BlocksMap.cpp
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(14): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(15): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(61): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(62): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(70): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(72): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(82): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(156): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(157): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(163): warning C4018: '<': no coinciden signed/unsigned
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(164): warning C4018: '<': no coinciden signed/unsigned
-  Paddle.cpp
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\paddle.cpp(6): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\paddle.cpp(7): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\paddle.cpp(37): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\paddle.cpp(38): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(14): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(15): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(62): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(63): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(71): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(73): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(83): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(157): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(158): warning C4244: 'inicializando': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(164): warning C4018: '<': no coinciden signed/unsigned
+e:\github\tpv-arkanoid\arkanoid\holasdl\blocksmap.cpp(165): warning C4018: '<': no coinciden signed/unsigned
+  Game.cpp
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+  main.cpp
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
   Generando código...
-  HolaSDL.vcxproj -> C:\Users\gtada\Desktop\Repositorio - GitHUB\TPV-Arkanoid\Arkanoid\bin\ArkanoidDebug.exe
+  HolaSDL.vcxproj -> E:\Github\TPV-Arkanoid\Arkanoid\bin\ArkanoidDebug.exe

@@ -35,9 +35,14 @@ const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark"
 
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
+const string FONT_PATH = "..\\fonts\\";
 const uint WALL_WIDTH = 10;
 const uint FRAMERATE = 60;
 const uint FRAME_CONTROL = (1000 / FRAMERATE);
+const uint MAX_LIVES = 3;
+const uint TOP_MARGIN = 20;
+const uint BALL_SIZE = 10;
+const uint PADDLE_WIDTH = 100;
 
 class Game
 {
@@ -45,9 +50,11 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	bool exit = false;
-	bool dead = false;
-	bool endGame = false;
+	bool dead = true;
+	bool gameOver = false;
+	bool endLevel = false;
 	Texture* textures[NUM_TEXTURES];
+	Ball* livesTextures[MAX_LIVES];
 	Ball* ball = nullptr;
 	Paddle* paddle = nullptr;
 	BlocksMap* blocksMap = nullptr;
@@ -56,7 +63,9 @@ private:
 	Wall* topWall = nullptr;
 	void cleanGame();
 
+	uint lives = 0;
 	uint currentLevel = 0;
+	uint time = 0;
 
 public:
 	Game();
@@ -68,5 +77,7 @@ public:
 	bool collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVector);
 	//Opcional
 	void loadNextLevel();
+	//Auxiliar
+	void GameOver();
 };
 

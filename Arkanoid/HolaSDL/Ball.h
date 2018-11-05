@@ -14,7 +14,7 @@ private:
 	SDL_Rect getDestRect() const;
 
 public:
-	Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game);
+	Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game, bool fake);
 	void render() const;
 	void update();
 };

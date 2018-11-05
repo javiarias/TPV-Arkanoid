@@ -80,7 +80,7 @@ Block* BlocksMap::blockAt(const Vector2D& p) const {
 Block* BlocksMap::collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) const {
 
 	Block* b = nullptr;
-	if (ballRect.y - ballRect.h < yPixTotal && ballRect.x < xPixTotal && ballRect.y >= 0 && ballRect.x >= 0) {
+	if (ballRect.y < (yPixTotal + refPos->getY()) && ballRect.x < xPixTotal && ballRect.y >= 0 && ballRect.x >= 0) { 
 		Vector2D p0 = { (double)ballRect.x, (double)ballRect.y }; // top-left
 		Vector2D p1 = { (double)(ballRect.x + ballRect.w), (double)ballRect.y }; // top-right
 		Vector2D p2 = { (double)ballRect.x, (double)(ballRect.y + ballRect.h) }; // bottom-left

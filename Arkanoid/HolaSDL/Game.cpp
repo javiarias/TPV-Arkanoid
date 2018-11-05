@@ -13,12 +13,18 @@ Game::Game() {
 		textures[i] = new Texture(renderer, IMG_PATH + FILES[i].filename, FILES[i].rows, FILES[i].columns);
 
 	// create the game objects
-	leftWall = new Wall(0, 0, WALL_WIDTH, WIN_HEIGHT, textures[SideTex]);
-	rightWall = new Wall(WIN_WIDTH - WALL_WIDTH, 0, WALL_WIDTH, 600, textures[SideTex]);
-	topWall = new Wall(0, 0, WIN_WIDTH, WALL_WIDTH, textures[TopTex]);
-	ball = new Ball(WIN_WIDTH/2 - 10, WIN_HEIGHT - 100 - 15, 10, 10, textures[BallTex], this);
-	paddle = new Paddle(WIN_WIDTH/2 - 50, WIN_HEIGHT - 100, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
-	blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
+	leftWall = new Wall(0, TOP_MARGIN, WALL_WIDTH, WIN_HEIGHT - TOP_MARGIN, textures[SideTex]);
+	rightWall = new Wall(WIN_WIDTH - WALL_WIDTH, TOP_MARGIN + WALL_WIDTH, WALL_WIDTH, WIN_HEIGHT - TOP_MARGIN, textures[SideTex]);
+	topWall = new Wall(0, TOP_MARGIN, WIN_WIDTH, WALL_WIDTH, textures[TopTex]);
+	ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+	paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
+	blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
+
+
+	for (uint i = 0; i < MAX_LIVES; i++)
+		livesTextures[i] = new Ball(TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2) * i, TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+
+	lives = MAX_LIVES;
 }
 
 Game::~Game() {
@@ -30,6 +36,7 @@ Game::~Game() {
 
 void Game::cleanGame() {
 	for (uint i = 0; i < NUM_TEXTURES; i++) delete textures[i];
+	for (uint i = 0; i < MAX_LIVES; i++) delete livesTextures[i];
 	delete leftWall;
 	delete rightWall;
 	delete topWall;
@@ -39,33 +46,52 @@ void Game::cleanGame() {
 }
 
 void Game::run() {
-	while (!exit) {
-		uint frameStart = SDL_GetTicks();
+	render();
+	while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio
+		handleEvents();
 
-		//Si el nivel ha acabado, carga el siguiente
-		if (endGame)
-			loadNextLevel();
-		else {
-			handleEvents();
-			update();
-			render();
-			//Si la bola "muere"
-			if (dead) {
-				delete ball;
-				ball = new Ball(395, 480, 10, 10, textures[BallTex], this);
-				delete paddle;
-				paddle = new Paddle(350, 500, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
-				render();
-				while (dead)
+	while (!exit) {
+		if (!gameOver) { //si el juego no se ha acabado de alguna forma (ganado o perdido)
+			uint frameStart = SDL_GetTicks();
+
+			//Si el nivel ha acabado, carga el siguiente
+			if (endLevel) {
+				loadNextLevel();
+				dead = true;
+				while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio al cargar un nuevo nivel
 					handleEvents();
 			}
+			else {
+				handleEvents();
+				update();
+				render();
+				//Si la bola "muere"
+				if (dead) {
+					lives--;
+					if (lives > 0) {
+						delete ball;
+						ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+						delete paddle;
+						paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
+						render();
+						while (dead)
+							handleEvents();
+					}
+					else
+						gameOver = true;
+				}
+			}
+			uint frameDuration = SDL_GetTicks() - frameStart;
+			if (frameDuration < FRAME_CONTROL)
+				SDL_Delay(FRAME_CONTROL - frameDuration);
 		}
-		uint frameDuration = SDL_GetTicks() - frameStart;
-		if (frameDuration < FRAME_CONTROL)
-			SDL_Delay(FRAME_CONTROL - frameDuration);
+
+		else {
+			GameOver();
+		}
+
+		time += SDL_GetTicks();
 	}
-	cout << "Juego acabado!" << endl;
-	system("pause");
 }
 
 void Game::update() {
@@ -82,6 +108,8 @@ void Game::render() const {
 	leftWall->render();
 	rightWall->render();
 	topWall->render();
+	for (uint i = 0; i < lives; i++)
+		livesTextures[i]->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -93,8 +121,8 @@ void Game::handleEvents() {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
 				dead = false;
 		}
-		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER)
-			endGame = true;
+		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
+			endLevel = true;
 		else {
 			if (event.type == SDL_QUIT)
 				exit = true;
@@ -129,7 +157,7 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 			blocksMap->destroy(block);
 			//Si no quedan bloques carga el nivel siguiente
 			if (blocksMap->getBlockAmount() == 0)
-				endGame = true;
+				endLevel = true;
 			return true;
 		}
 		return false;
@@ -146,10 +174,26 @@ void Game::loadNextLevel() {
 	currentLevel++;
 	//Si quedan niveles carga el siguiente, si no, exit = true, sale del juego
 	if (currentLevel < NUM_LEVELS) {
-		ball = new Ball(WIN_WIDTH / 2 - 10, WIN_HEIGHT - 100 - 15, 10, 10, textures[BallTex], this);
-		paddle = new Paddle(WIN_WIDTH / 2 - 50, WIN_HEIGHT - 100, 100, 10, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
+		ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+		paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 		blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
-		endGame = false;
+		endLevel = false;
+		lives = MAX_LIVES;
 	}
-	else exit = true;
+	else gameOver = true;
+}
+
+void Game::GameOver() {
+
+	render();
+
+	delete leftWall;
+	delete rightWall;
+	delete topWall;
+	delete ball;
+	delete paddle;
+	delete blocksMap;
+
+	cout << "Juego acabado!" << endl;
+	system("pause");
 }
