@@ -7,17 +7,19 @@
 #include "Wall.h"
 #include <string>
 #include "Ball.h"
+#include "MyTimer.h"
 
 const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
-const uint NUM_TEXTURES = 5;
+const uint NUM_TEXTURES = 6;
 const uint NUM_LEVELS = 3;
 const enum TextureName {
 	BallTex,
 	BlockTex,
 	PaddleTex,
 	SideTex,
-	TopTex
+	TopTex,
+	DigitsTex
 };
 const struct File {
 	string filename;
@@ -29,7 +31,8 @@ const File FILES[NUM_TEXTURES] =
 	{"bricks.png", 2, 3},
 	{"paddle.png", 1, 1},
 	{"side.png", 1, 1},
-	{"topside.png", 1, 1}
+	{"topside.png", 1, 1},
+	{"digits.jpeg", 3, 4}
 };
 const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark" };
 
@@ -61,10 +64,13 @@ private:
 	Wall* leftWall = nullptr;
 	Wall* rightWall = nullptr;
 	Wall* topWall = nullptr;
+	MyTimer* timer = nullptr;
+
 	void cleanGame();
 
 	uint lives = 0;
 	uint currentLevel = 0;
+
 	uint time = 0;
 
 public:
