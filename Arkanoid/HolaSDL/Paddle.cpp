@@ -18,9 +18,9 @@ void Paddle::update() {
 void Paddle::handleEvents(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
-			dir.setX(-7);
+			dir.setX(-PADDLE_VEL);
 		else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
-			dir.setX(7);
+			dir.setX(PADDLE_VEL);
 		else
 			dir.setX(0);
 	}

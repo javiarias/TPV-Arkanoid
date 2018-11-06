@@ -2,6 +2,8 @@
 #include "Vector2D.h"
 #include "Texture.h"
 
+const int PADDLE_VEL = 9;
+
 class Paddle
 {
 private:

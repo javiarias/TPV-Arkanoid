@@ -57,9 +57,12 @@ void Game::run() {
 			//Si el nivel ha acabado, carga el siguiente
 			if (endLevel) {
 				loadNextLevel();
-				dead = true;
-				while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio al cargar un nuevo nivel
-					handleEvents();
+				if (!gameOver) {
+					render();
+					dead = true;
+					while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio al cargar un nuevo nivel
+						handleEvents();
+				}
 			}
 			else {
 				handleEvents();
@@ -166,33 +169,29 @@ bool Game::collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVec
 
 //Opcional
 void Game::loadNextLevel() {
-	delete ball;
-	delete paddle;
-	delete blocksMap;
 
 	//Subimos de nivel
 	currentLevel++;
 	//Si quedan niveles carga el siguiente, si no, exit = true, sale del juego
 	if (currentLevel < NUM_LEVELS) {
+		delete ball;
+		delete paddle;
+		delete blocksMap;
+
 		ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
 		paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
-		blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
+		blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 		endLevel = false;
 		lives = MAX_LIVES;
 	}
-	else gameOver = true;
+	else
+		gameOver = true;
 }
 
 void Game::GameOver() {
 
+	exit = true;
 	render();
-
-	delete leftWall;
-	delete rightWall;
-	delete topWall;
-	delete ball;
-	delete paddle;
-	delete blocksMap;
 
 	cout << "Juego acabado!" << endl;
 	system("pause");
