@@ -49,8 +49,7 @@ void Game::cleanGame() {
 
 void Game::run() {
 	render();
-	while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio
-		handleEvents();
+	ballPause();
 
 	while (!exit) {
 		if (!gameOver) { //si el juego no se ha acabado de alguna forma (ganado o perdido)
@@ -62,8 +61,7 @@ void Game::run() {
 				if (!gameOver) {
 					render();
 					dead = true;
-					while (dead) //reciclado de la muerte de la pelota, pausa el juego hasta que se presiona espacio al cargar un nuevo nivel
-						handleEvents();
+					ballPause();
 				}
 			}
 			else {
@@ -79,18 +77,17 @@ void Game::run() {
 						delete paddle;
 						paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 						render();
-						while (dead)
-							handleEvents();
+						ballPause();
 					}
 					else
 						gameOver = true;
 				}
 			}
-			uint frameDuration = SDL_GetTicks() - frameStart;
-			if (frameDuration < FRAME_CONTROL)
-				SDL_Delay(FRAME_CONTROL - frameDuration);
-			time += FRAME_CONTROL;
-			timer->update(time);
+				uint frameDuration = SDL_GetTicks() - frameStart;
+				if (frameDuration < FRAME_CONTROL)
+					SDL_Delay(FRAME_CONTROL - frameDuration);
+				time += FRAME_CONTROL;
+				timer->update(time);
 		}
 
 		else {
@@ -127,6 +124,10 @@ void Game::handleEvents() {
 		if (dead) {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
 				dead = false;
+			else if (event.type == SDL_QUIT)
+				exit = true;
+			else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
+				endLevel = true;
 		}
 		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
 			endLevel = true;
@@ -196,8 +197,101 @@ void Game::loadNextLevel() {
 void Game::GameOver() {
 
 	exit = true;
-	render();
+	SDL_DestroyWindow(window);
 
-	cout << "Juego acabado!" << endl;
+	if (dead) 
+		cout << "GAME OVER" << endl;
+	else {
+		cout << "Juego acabado!" << endl;
+	}
+	scoreboard();
 	system("pause");
+}
+
+void Game::ballPause() {
+	while (dead && !exit && !endLevel)
+		handleEvents();
+}
+
+void Game::scoreboard() {
+	uint count = 0;
+	if(!dead)
+		writeScoreboard(count);
+
+	cout << endl << "-----Scoreboard-----" << endl << endl;
+	ifstream input;
+	input.open(SAVE_PATH + "scoreboard.ark");
+	for (int i = 1; i <= 10; i++) {
+		cout << i << ": ";
+
+		if (input.eof())
+			cout << "--:--";
+		else {
+			uint aux;
+			input >> aux;
+			if ((aux / 1000) / 60 < 10)
+				cout << "0";
+			
+			cout << (aux / 1000) / 60;
+
+			cout << ":";
+
+			if ((aux / 1000) % 60 < 10)
+				cout << "0";
+
+			cout << (aux / 1000) % 60;
+
+			if (count == i)
+				cout << " !!!";
+		}
+
+		cout << endl;
+	}
+
+	cout << endl;
+	input.close();
+}
+
+void Game::writeScoreboard(uint& c) {
+	ifstream input;
+	input.open(SAVE_PATH + "scoreboard.ark");
+
+	if (!input.is_open()) {
+		ofstream output;
+		output.open(SAVE_PATH + "scoreboard.ark");
+		output << time << endl;
+
+		output.close();
+	}
+	else {
+		uint timeCompare = 0, count = 0;
+		for (int i = 1; i <= 10 && timeCompare < time && !input.eof(); i++) {
+			input >> timeCompare;
+			if (timeCompare > time || input.eof())
+				count = i;
+		}
+		if (count != 0) {
+			c = count;
+			string temp;
+			input.clear();
+			input.seekg(0, std::ios::beg);
+			for (int i = 1; i <= 9 && !input.eof(); i++) {
+				if (i == count) {
+					temp = temp + to_string(time);
+					temp = temp + " ";
+				}
+				string aux;
+				input >> aux;
+				temp = temp + aux;
+				temp = temp + " ";
+			}
+
+			ofstream output;
+			output.open(SAVE_PATH + "scoreboard.ark");
+			output << temp;
+
+			output.close();
+		}
+	}
+	input.close();
 }

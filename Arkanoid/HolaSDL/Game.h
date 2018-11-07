@@ -40,6 +40,7 @@ const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark"
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
 const string FONT_PATH = "..\\fonts\\";
+const string SAVE_PATH = "..\\saves\\";
 const uint WALL_WIDTH = 10;
 const uint FRAMERATE = 60;
 const uint FRAME_CONTROL = (1000 / FRAMERATE);
@@ -74,17 +75,22 @@ private:
 
 	uint time = 0;
 
+
+	
+	void loadNextLevel();
+	//Auxiliar
+	void GameOver();
+	void render() const;
+	void handleEvents();
+	void update();
+	void ballPause();
+	void scoreboard();
+	void writeScoreboard(uint& c);
+
 public:
 	Game();
 	~Game();
 	void run();
-	void render() const;
-	void handleEvents();
-	void update();
 	bool collides(const SDL_Rect& rect, const Vector2D& vel, Vector2D& collVector);
-	//Opcional
-	void loadNextLevel();
-	//Auxiliar
-	void GameOver();
 };
 
