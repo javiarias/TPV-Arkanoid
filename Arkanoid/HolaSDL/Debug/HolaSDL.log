@@ -1,5 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: El directorio intermedio (Debug\) contiene archivos compartidos de otro proyecto (HolaSDL.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
-  MyTimer.cpp
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\mytimer.cpp(16): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\mytimer.cpp(17): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+  Game.cpp
+c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+c:\users\gtada\desktop\repositorio - github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
   HolaSDL.vcxproj -> C:\Users\gtada\Desktop\Repositorio - GitHUB\TPV-Arkanoid\Arkanoid\bin\ArkanoidDebug.exe

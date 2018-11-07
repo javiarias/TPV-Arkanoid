@@ -22,10 +22,11 @@ Game::Game() {
 	// Timer
 	timer = new MyTimer(textures[DigitsTex],(WIN_WIDTH - 15 * 5) / 2, (TOP_MARGIN - 15) / 2, 15, 15);
 	// Vidas
-	for (uint i = 0; i < MAX_LIVES; i++)
-		livesTextures[i] = new Ball(TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2) * i, TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+	livesCounter = new LivesCounter(MAX_LIVES, TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2), TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex]);
+	/*for (uint i = 0; i < MAX_LIVES; i++)
+		livesTextures[i] = new Ball(TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2) * i, TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);*/
 
-	lives = MAX_LIVES;
+	//lives = MAX_LIVES;
 }
 
 Game::~Game() {
@@ -71,8 +72,8 @@ void Game::run() {
 				render();
 				//Si la bola "muere"
 				if (dead) {
-					lives--;
-					if (lives > 0) {
+					livesCounter->countDown();
+					if (livesCounter->getNumLives() > 0) {
 						delete ball;
 						ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
 						delete paddle;
@@ -115,8 +116,7 @@ void Game::render() const {
 	//Timer
 	timer->render();
 	//Vidas
-	for (uint i = 0; i < lives; i++)
-		livesTextures[i]->render();
+	livesCounter->render(20);
 
 	SDL_RenderPresent(renderer);
 }
@@ -186,7 +186,8 @@ void Game::loadNextLevel() {
 		paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 		blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 		endLevel = false;
-		lives = MAX_LIVES;
+
+		livesCounter->setLivesTo(MAX_LIVES);
 	}
 	else
 		gameOver = true;

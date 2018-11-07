@@ -8,6 +8,7 @@
 #include <string>
 #include "Ball.h"
 #include "MyTimer.h"
+#include "LivesCounter.h"
 
 const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
@@ -65,10 +66,10 @@ private:
 	Wall* rightWall = nullptr;
 	Wall* topWall = nullptr;
 	MyTimer* timer = nullptr;
-
+	LivesCounter* livesCounter = nullptr;
 	void cleanGame();
 
-	uint lives = 0;
+	//uint lives = 0;
 	uint currentLevel = 0;
 
 	uint time = 0;

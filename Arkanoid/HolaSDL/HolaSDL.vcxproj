@@ -73,6 +73,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlocksMap.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="LivesCounter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="BlocksMap.h" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="LivesCounter.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="MyTimer.h" />
