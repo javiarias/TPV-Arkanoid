@@ -258,7 +258,6 @@ void Game::writeScoreboard(uint& c) {
 	if (!input.is_open()) {
 		ofstream output;
 		output.open(SAVE_PATH + "scoreboard.ark");
-		output << time;
 		output.close();
 	}
 	if (!dead){
@@ -267,7 +266,16 @@ void Game::writeScoreboard(uint& c) {
 			if (timeCompare > time || input.eof())
 				count = i;
 		}
-		if (count != 0) {
+
+		if(timeCompare == 0) {
+			ofstream output;
+			output.open(SAVE_PATH + "scoreboard.ark");
+			output << time;
+
+			output.close();
+		}
+
+		else if (count != 0) {
 			c = count;
 			string temp;
 			input.clear();
