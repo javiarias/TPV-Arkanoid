@@ -10,6 +10,8 @@
 #include "MyTimer.h"
 #include "LivesCounter.h"
 
+const bool DEBUG = true;
+
 const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
 const uint NUM_TEXTURES = 6;

@@ -126,10 +126,10 @@ void Game::handleEvents() {
 				dead = false;
 			else if (event.type == SDL_QUIT)
 				exit = true;
-			else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
+			else if (DEBUG && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
 				endLevel = true;
 		}
-		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
+		else if (DEBUG && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_KP_ENTER) //DEBUG
 			endLevel = true;
 		else {
 			if (event.type == SDL_QUIT)
@@ -199,7 +199,7 @@ void Game::GameOver() {
 	exit = true;
 	SDL_DestroyWindow(window);
 
-	if (dead) 
+	if (dead && !DEBUG) 
 		cout << "GAME OVER" << endl;
 	else {
 		cout << "Juego acabado!" << endl;
@@ -215,8 +215,7 @@ void Game::ballPause() {
 
 void Game::scoreboard() {
 	uint count = 0;
-	if(!dead)
-		writeScoreboard(count);
+	writeScoreboard(count);
 
 	cout << endl << "-----Scoreboard-----" << endl << endl;
 	ifstream input;
@@ -224,14 +223,12 @@ void Game::scoreboard() {
 	for (int i = 1; i <= 10; i++) {
 		cout << i << ": ";
 
-		if (input.eof())
-			cout << "--:--";
-		else {
-			uint aux;
-			input >> aux;
+		uint aux;
+
+		if (input >> aux) {
 			if ((aux / 1000) / 60 < 10)
 				cout << "0";
-			
+
 			cout << (aux / 1000) / 60;
 
 			cout << ":";
@@ -244,6 +241,8 @@ void Game::scoreboard() {
 			if (count == i)
 				cout << " !!!";
 		}
+		else
+			cout << "--:--";
 
 		cout << endl;
 	}
@@ -259,14 +258,12 @@ void Game::writeScoreboard(uint& c) {
 	if (!input.is_open()) {
 		ofstream output;
 		output.open(SAVE_PATH + "scoreboard.ark");
-		output << time << endl;
-
+		output << time;
 		output.close();
 	}
-	else {
+	if (!dead){
 		uint timeCompare = 0, count = 0;
-		for (int i = 1; i <= 10 && timeCompare < time && !input.eof(); i++) {
-			input >> timeCompare;
+		for (int i = 1; i <= 10 && timeCompare < time && input >> timeCompare; i++) {
 			if (timeCompare > time || input.eof())
 				count = i;
 		}
@@ -275,16 +272,16 @@ void Game::writeScoreboard(uint& c) {
 			string temp;
 			input.clear();
 			input.seekg(0, std::ios::beg);
-			for (int i = 1; i <= 9 && !input.eof(); i++) {
+			string aux;
+			for (int i = 1; i <= 9 && input >> aux; i++) {
 				if (i == count) {
 					temp = temp + to_string(time);
 					temp = temp + " ";
 				}
-				string aux;
-				input >> aux;
 				temp = temp + aux;
 				temp = temp + " ";
 			}
+			temp.pop_back();
 
 			ofstream output;
 			output.open(SAVE_PATH + "scoreboard.ark");
