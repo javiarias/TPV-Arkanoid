@@ -1,0 +1,36 @@
+------GRUPO------
+Javier Arias González
+Dany Faouaz Santillana
+
+------FUNCIONALIDADES OPCIONALES------
+
+--PASO DE NIVEL--
+
+mapFiles es un array que contiene strings de todos los archivos de niveles en el juego
+
+Cuando se destruyen todos los bloques, se avanza de nivel llamando a la función loadNextLevel. Si existe, se reinician la bola, el paddle, el blocksmap y la cantidad de vidas. Si no existe,
+se asume que el juego ha terminado y que el jugador ha ganado
+
+--CONTADOR DE TIEMPO--
+
+Se ha creado una clase Timer que procesa el tiempo transcurrido y lo renderiza
+
+Tras cada iteración del bucle de juego, se añaden las frames transcurridas a una variable privada y se actualiza el Timer con esta
+
+Se emplea una imagen con dígitos del 0 al 9 para renderizar el tiempo en la barra superior, en medio de la pantalla
+
+--SCOREBOARD--
+
+Se han creado dos funciones, scoreboard y writeScoreboard, para gestionar el scoreboard de tiempos que saldrá al acabar el juego
+
+writeScoreboard crea el archivo scoreboard.ark de no existir, lee sus contenidos y lo sobreescribe si hay que añadir un tiempo nuevo al scoreboard
+
+scoreboard llama a writeScoreboard, del cual recibe el valor counter que marca en qué posición de la lista se ha añadido un tiempo (si se ha añadido),
+y después lee el archivo para escribirlo en consola, marcando el tiempo añadido al scoreboard (de añadirse algo)
+
+--OTROS--
+
+La función GameOver cierra la ventana y procesa el scoreboard cuando se acaba la partida
+
+La función ballPause evita que el juego se mueva inmediatamente tras morir, abrir el juego o pasar de nivel hasta que se pulse la barra espaciadora
+

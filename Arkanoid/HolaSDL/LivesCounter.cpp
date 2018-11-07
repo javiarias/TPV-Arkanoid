@@ -23,7 +23,7 @@ void LivesCounter::setLivesTo(uint _lives) {
 	numLives = _lives;
 }
 
-void LivesCounter::render(uint offSet) {
+void LivesCounter::render() {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
 	destRect.y = pos.getY();
@@ -32,7 +32,7 @@ void LivesCounter::render(uint offSet) {
 
 	for (uint i = 0; i < numLives; i++) {
 		texture->render(destRect);
-		destRect.x += offSet;
+		destRect.x += 2 * width;
 	}
 }
 

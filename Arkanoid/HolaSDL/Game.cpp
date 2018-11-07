@@ -20,7 +20,7 @@ Game::Game() {
 	paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 	blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 	// Timer
-	timer = new MyTimer(textures[DigitsTex],(WIN_WIDTH - 15 * 5) / 2, (TOP_MARGIN - 15) / 2, 15, 15);
+	timer = new MyTimer(textures[DigitsTex], (WIN_WIDTH - 15 * 5) / 2, (TOP_MARGIN - 15) / 2, 15, 15);
 	// Vidas
 	livesCounter = new LivesCounter(MAX_LIVES, TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2), TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex]);
 	/*for (uint i = 0; i < MAX_LIVES; i++)
@@ -114,7 +114,7 @@ void Game::render() const {
 	//Timer
 	timer->render();
 	//Vidas
-	livesCounter->render(20);
+	livesCounter->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -276,6 +276,7 @@ void Game::writeScoreboard(uint& c) {
 			output << time;
 
 			output.close();
+			count = 1;
 		}
 
 		else if (count != 0) {
