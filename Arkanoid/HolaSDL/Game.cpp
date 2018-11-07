@@ -222,6 +222,8 @@ void Game::scoreboard() {
 	input.open(SAVE_PATH + "scoreboard.ark");
 	for (int i = 1; i <= 10; i++) {
 		cout << i << ": ";
+		if (i < 10)
+			cout << " ";
 
 		uint aux;
 
