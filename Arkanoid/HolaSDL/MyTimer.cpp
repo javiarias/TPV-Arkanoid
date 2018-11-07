@@ -10,7 +10,7 @@ MyTimer::MyTimer(Texture* _texture, uint x, uint y, uint _height, uint _width)
 	pos = Vector2D(x, y);
 }
 
-
+//Renderiza
 void MyTimer::render() {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();

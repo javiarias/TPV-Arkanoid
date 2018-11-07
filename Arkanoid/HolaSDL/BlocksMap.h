@@ -4,6 +4,7 @@
 #include "Block.h"
 #include <iostream>
 #include <fstream>
+#include "checkML.h"
 
 class BlocksMap {
 private:

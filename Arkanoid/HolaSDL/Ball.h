@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2D.h"
 #include "Texture.h"
+#include "checkML.h"
 
 class Game;
 
@@ -14,7 +15,7 @@ private:
 	SDL_Rect getDestRect() const;
 
 public:
-	Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game, bool fake);
+	Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game);
 	void render() const;
 	void update();
 };

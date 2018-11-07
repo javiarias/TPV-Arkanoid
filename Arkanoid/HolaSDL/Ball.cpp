@@ -2,12 +2,9 @@
 #include "Game.h"
 
 
-Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game, bool fake) {
+Ball::Ball(uint x, uint y, uint _height, uint _width, Texture* _texture, Game* _game) {
 	pos = Vector2D(x, y);
-	if (!fake)
-		vel = Vector2D(7, -4);
-	else
-		vel = Vector2D(0, 0);
+	vel = Vector2D(7, -4);
 	height = _height;
 	width = _width;
 	texture = _texture;

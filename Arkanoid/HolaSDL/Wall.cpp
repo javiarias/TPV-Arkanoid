@@ -1,9 +1,7 @@
 #include "Wall.h"
 
-
-
-void Wall::render() const
-{
+//Renderiza
+void Wall::render() const{
 	SDL_Rect destRect;
 	destRect.x = pos.getX();
 	destRect.y = pos.getY();

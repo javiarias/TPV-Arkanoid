@@ -1,6 +1,7 @@
 #include "BlocksMap.h"
 #include <cmath>
 
+
 BlocksMap::BlocksMap(string file, uint refX, uint refY, uint WindowXSize, uint WindowYSize, Texture* texture)
 {
 	xPixTotal = WindowXSize - 2 * refX;
@@ -25,6 +26,7 @@ BlocksMap::~BlocksMap() {
 	refPos = nullptr;
 }
 
+//Se carga de fichero
 void BlocksMap::load(string file) {
 	ifstream input;
 	input.open(file);
@@ -67,6 +69,7 @@ int BlocksMap::getBlockAmount() const {
 	return ret;
 }
 
+//Devuelve el bloque que hay en la posicion p
 Block* BlocksMap::blockAt(const Vector2D& p) const {
 	uint x = trunc((double)((p.getX() - refPos->getX()) / xPixCell)); // el programa nos daba errores a la hora de calcular la columna y la fila, 
 																	  // y nos comentaron que dejáramos esto por si acaso
@@ -77,6 +80,7 @@ Block* BlocksMap::blockAt(const Vector2D& p) const {
 		return nullptr;
 }
 
+//Comprueba se se colisiona con algun bloque
 Block* BlocksMap::collides(const SDL_Rect& ballRect, const Vector2D& ballVel, Vector2D& collVector) const {
 
 	Block* b = nullptr;

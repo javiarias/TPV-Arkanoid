@@ -9,13 +9,17 @@
 #include "Ball.h"
 #include "MyTimer.h"
 #include "LivesCounter.h"
+#include "checkML.h"
 
+//Para cambiar entre DEBUG y RELEASE
 const bool DEBUG = true;
-
+//Dimensiones de Pantalla
 const uint WIN_WIDTH = 800;
 const uint WIN_HEIGHT = 600;
+//Constantes
 const uint NUM_TEXTURES = 6;
 const uint NUM_LEVELS = 3;
+
 const enum TextureName {
 	BallTex,
 	BlockTex,
@@ -71,12 +75,9 @@ private:
 	LivesCounter* livesCounter = nullptr;
 	void cleanGame();
 
-	//uint lives = 0;
 	uint currentLevel = 0;
 
 	uint time = 0;
-
-
 	
 	void loadNextLevel();
 	//Auxiliar

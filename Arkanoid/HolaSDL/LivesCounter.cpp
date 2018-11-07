@@ -23,6 +23,7 @@ void LivesCounter::setLivesTo(uint _lives) {
 	numLives = _lives;
 }
 
+//Renderiza
 void LivesCounter::render(uint offSet) {
 	SDL_Rect destRect;
 	destRect.x = pos.getX();

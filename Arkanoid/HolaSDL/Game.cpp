@@ -16,17 +16,13 @@ Game::Game() {
 	leftWall = new Wall(0, TOP_MARGIN, WALL_WIDTH, WIN_HEIGHT - TOP_MARGIN, textures[SideTex]);
 	rightWall = new Wall(WIN_WIDTH - WALL_WIDTH, TOP_MARGIN + WALL_WIDTH, WALL_WIDTH, WIN_HEIGHT - TOP_MARGIN, textures[SideTex]);
 	topWall = new Wall(0, TOP_MARGIN, WIN_WIDTH, WALL_WIDTH, textures[TopTex]);
-	ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+	ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this);
 	paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 	blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 	// Timer
 	timer = new MyTimer(textures[DigitsTex],(WIN_WIDTH - 15 * 5) / 2, (TOP_MARGIN - 15) / 2, 15, 15);
-	// Vidas
+	// Contador de Vidas
 	livesCounter = new LivesCounter(MAX_LIVES, TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2), TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex]);
-	/*for (uint i = 0; i < MAX_LIVES; i++)
-		livesTextures[i] = new Ball(TOP_MARGIN / 2 + (BALL_SIZE + TOP_MARGIN / 2) * i, TOP_MARGIN / 2 - BALL_SIZE / 2, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);*/
-
-	//lives = MAX_LIVES;
 }
 
 Game::~Game() {
@@ -72,9 +68,10 @@ void Game::run() {
 				//Si la bola "muere"
 				if (dead) {
 					livesCounter->countDown();
+					//Si te quedan mas de 0 vidas
 					if (livesCounter->getNumLives() > 0) {
 						delete ball;
-						ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+						ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this);
 						delete paddle;
 						paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 						render();
@@ -184,7 +181,7 @@ void Game::loadNextLevel() {
 		delete paddle;
 		delete blocksMap;
 
-		ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this, false);
+		ball = new Ball((WIN_WIDTH / 2) - BALL_SIZE / 2, WIN_HEIGHT - (WIN_HEIGHT / 10) - 2 * BALL_SIZE, BALL_SIZE, BALL_SIZE, textures[BallTex], this);
 		paddle = new Paddle((WIN_WIDTH / 2) - PADDLE_WIDTH / 2, WIN_HEIGHT - (WIN_HEIGHT / 10), PADDLE_WIDTH, BALL_SIZE, WIN_WIDTH, WALL_WIDTH, textures[PaddleTex]);
 		blocksMap = new BlocksMap(MAP_PATH + mapFiles[currentLevel], WALL_WIDTH, WALL_WIDTH + TOP_MARGIN, WIN_WIDTH, WIN_HEIGHT, textures[BlockTex]);
 		endLevel = false;
@@ -214,6 +211,7 @@ void Game::ballPause() {
 		handleEvents();
 }
 
+//Escribe en consola el archivo de  Scoreboard
 void Game::scoreboard() {
 	uint count = 0;
 	writeScoreboard(count);
@@ -254,6 +252,7 @@ void Game::scoreboard() {
 	input.close();
 }
 
+//Escribe en archivo los mejores resultados
 void Game::writeScoreboard(uint& c) {
 	ifstream input;
 	input.open(SAVE_PATH + "scoreboard.ark");
