@@ -42,5 +42,3 @@ void Ball::update() {
 		pos = prevPos + vel;
 	}
 }
-
-

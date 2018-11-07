@@ -17,6 +17,6 @@ public:
 	void countDown();
 	void setLivesTo(uint _lives);
 
-	void render(uint offSet);
+	void render();
 };
 

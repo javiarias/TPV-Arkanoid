@@ -41,7 +41,7 @@ const File FILES[NUM_TEXTURES] =
 	{"topside.png", 1, 1},
 	{"digits.jpeg", 3, 4}
 };
-const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark" };
+const string mapFiles[NUM_LEVELS] = { "level01.ark", "level02.ark", "level03.ark" };
 
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
@@ -80,7 +80,6 @@ private:
 	uint time = 0;
 	
 	void loadNextLevel();
-	//Auxiliar
 	void GameOver();
 	void render() const;
 	void handleEvents();

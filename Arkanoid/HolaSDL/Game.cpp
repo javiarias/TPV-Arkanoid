@@ -111,7 +111,7 @@ void Game::render() const {
 	//Timer
 	timer->render();
 	//Vidas
-	livesCounter->render(20);
+	livesCounter->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -275,6 +275,7 @@ void Game::writeScoreboard(uint& c) {
 			output << time;
 
 			output.close();
+			count = 1;
 		}
 
 		else if (count != 0) {
