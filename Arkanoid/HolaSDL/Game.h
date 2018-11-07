@@ -42,7 +42,7 @@ const string mapFiles[NUM_LEVELS] = { "level01.ark","level02.ark" ,"level03.ark"
 const string IMG_PATH = "..\\images\\";
 const string MAP_PATH = "..\\maps\\";
 const string FONT_PATH = "..\\fonts\\";
-const string SAVE_PATH = "..\\saves\\";
+const string SAVE_PATH = "..\\";
 const uint WALL_WIDTH = 10;
 const uint FRAMERATE = 60;
 const uint FRAME_CONTROL = (1000 / FRAMERATE);
@@ -61,7 +61,6 @@ private:
 	bool gameOver = false;
 	bool endLevel = false;
 	Texture* textures[NUM_TEXTURES];
-	Ball* livesTextures[MAX_LIVES];
 	Ball* ball = nullptr;
 	Paddle* paddle = nullptr;
 	BlocksMap* blocksMap = nullptr;

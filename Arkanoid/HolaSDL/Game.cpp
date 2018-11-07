@@ -38,13 +38,14 @@ Game::~Game() {
 
 void Game::cleanGame() {
 	for (uint i = 0; i < NUM_TEXTURES; i++) delete textures[i];
-	for (uint i = 0; i < MAX_LIVES; i++) delete livesTextures[i];
 	delete leftWall;
 	delete rightWall;
 	delete topWall;
 	delete ball;
 	delete paddle;
 	delete blocksMap;
+	delete timer;
+	delete livesCounter;
 }
 
 void Game::run() {
@@ -264,12 +265,12 @@ void Game::writeScoreboard(uint& c) {
 	}
 	if (!dead){
 		uint timeCompare = 0, count = 0;
-		for (int i = 1; i <= 10 && timeCompare < time && input >> timeCompare; i++) {
-			if (timeCompare > time || input.eof())
+		for (int i = 1; i <= 10 && count == 0; i++) {
+			if (!(input >> timeCompare) || timeCompare > time)
 				count = i;
 		}
 
-		if(timeCompare == 0) {
+		if (timeCompare == 0) {
 			ofstream output;
 			output.open(SAVE_PATH + "scoreboard.ark");
 			output << time;
@@ -283,13 +284,20 @@ void Game::writeScoreboard(uint& c) {
 			input.clear();
 			input.seekg(0, std::ios::beg);
 			string aux;
-			for (int i = 1; i <= 9 && input >> aux; i++) {
+			for (int i = 1; i <= 9 && !input.eof(); i++) {
+
+				input >> aux;
+
 				if (i == count) {
 					temp = temp + to_string(time);
 					temp = temp + " ";
 				}
 				temp = temp + aux;
 				temp = temp + " ";
+				if (i == count - 1) {
+					temp = temp + to_string(time);
+					temp = temp + " ";
+				}
 			}
 			temp.pop_back();
 

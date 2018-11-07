@@ -1,4 +1,4 @@
 ﻿  Game.cpp
-e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
-e:\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
-  HolaSDL.vcxproj -> E:\Github\TPV-Arkanoid\Arkanoid\bin\ArkanoidDebug.exe
+c:\users\ffreak\documents\github\tpv-arkanoid\arkanoid\holasdl\block.h(15): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+c:\users\ffreak\documents\github\tpv-arkanoid\arkanoid\holasdl\block.h(16): warning C4244: 'return': conversión de 'double' a 'uint'; posible pérdida de datos
+  HolaSDL.vcxproj -> C:\Users\FFreak\Documents\GitHub\TPV-Arkanoid\Arkanoid\bin\ArkanoidDebug.exe
